@@ -1,0 +1,127 @@
+all files not failure    ...... sa team
+exception                ....... we handle
+
+
+if erams pass   ...... sanity team
+exception/submission      ..... we handle
+
+
+fuser -u -v -c /witspace/audsilva/space_audsilva_ws_resync_test
+
+
+/auto/iox/bin/xr_commit -v resume -request_id DCT-00000206009 -sanities "MYSTIQUE_Sanity::Initial Resume" "ncs540l_sanity::Initial Resume" "mini-CRS_QFTS::Initial Resume" "ncs560_sanity::Initial Resume" "ncs540_sanity::Initial Resume" "iVista-cxr::Initial Resume" "iVista-exr-issu::Initial Resume" "ncs5500_Sanity::Initial Resume" "ncs1004_bh_sanity::Initial Resume" "xrv9k-sanity_PD::Initial Resume" "ROSCO_Sanity::Initial Resume"
+
+/auto/iox/bin/xr_commit -v resume -request_id CCT-00000073094 -p
+
+
+/auto/iox/bin/xr_commit -v resume -request_id CCT-00000073094 -pc    >>>>> manually resume pre commit
+
+
+
+/auto/iox/bin/xr_commit -v resume -request_id CCT-00000073094 -ac    >>>> acme commit
+
+/auto/iox/bin/xr_commit -v resume -request_id CCT-00000124582 -s iVista-exr-issu::Missing_image   >>>> sanity resume
+
+
+auto/iox/bin/xr_commit -v resume -request_id CCT-00000124582 -s iVista-exr-issu (sanity name ) ::Missing_image
+
+
+
+
+no mppb >>> binary image create / new component add
+
+
+
+acme config_check -checks credential_info:ark git_config_user git_lfs_config   >>>> git credential
+
+
+acme annotate
+
+
+**********
+While executing SA in xr-commit we sometimes see issues  in which “All Files are not analysed”.
+A developer might change a source file which is not built for any platform or image (such as test or simulation code). In such cases static analysis cannot be done on all files in the changeset. A source file can be excluded from static analysis by making an entry to relevant exception list. Once an addition is made to this list SA will not be attempted on that file. Earlier, this list was managed centrally by SA team and addition was made on request from developers. 
+To exclude "a.c" from analysis:
+1. 1)Create a directory named ".sa" in "ws_root" directory if it is not already there.  
+2. 2)Create a file named "permanent_exception_filelist.txt" in "<ws>/.sa" directory if it is not already there. 
+3. 3)Add a new line and add "path to a.c".
+Please categorize this issue under Root Cause “Others” and use #Tag as “#SAexceptionfile#error”.
+
+
+
+
+
+
+
+
+
+
+
+http://pi-web/pims-home/fcgi-bin/CCTReport/CCTSupportInfo.cgi#sanity_tests
+
+
+
+
+
+****** https://wiki.cisco.com/display/XROPS/How+to+handle+a+Rejected+PCR     ///// for PCR submit
+
+
+http://pi-web.cisco.com/pims-home/fcgi-bin/BugReport/DDTS.cgi?Function=DDTS
+
+
+
+
+request went into limbo state due to a service crash
+
+
+
+*********Hi Naveen ,
+
+Looks like your change set is already been committed and the refpoint generated is main/253 .
+
+bgl-ads-814:/nobackup/ntavade/viking > acme diff -comp iedge -from_ver main/252 -to_ver main/253
+Generating tmp diff workspace (it'll be auto-cleaned), please wait ...
+Source Base: ios_ena (src_base://acme/ios_ena)
+
+
+Component: iedge@main/253 (bgl-ads-814:/nobackup/ntavade/viking/iedge)
+
+
+Index: iedge/comp-mdata.pl
+===================================================================
+*** .CC/cache/comp-mdata.pl@@/main/19 Mon Aug 20 12:18:42 2018
+--- comp-mdata.pl Thu Aug 9 22:27:33 2018
+***************
+*** 472,477 ****
+--- 472,478 ----
+description => 'Test iedge HA Infra APIs',
+roles => [ 'iedge-core' ],
+target_dir => 'bin',
++ is_private => 1,
+#architectures => [ 'ppc', 'ppc-so', '4k']
+},
+{
+bgl-ads-814:/nobackup/ntavade/viking > 
+
+
+If that refpoint is not released to devline , need to submit a manual PCR to release refpoint to devline. 
+
+Regards,
+Prashant Dhama
+
+
+
+********
+
+http://pi-web.cisco.com/pims-home/cgi-bin/pims_nav.cgi?Option=PcrView          >>>>>> to check PCR id 
+
+
+
+
+
+
+
+
+DE wanted to know how this build is picked as green label build if image baseline build itself is failing? 
+Answer: MPPB picks a GL EFR only if same is available & released within last 48 hrs . Otherwise , tool will switch to latest EFR on lineup , which looks like the case here. Unfortunately , MPPB pull logs doesn’t exist anymore to verify same. In order to override this behavior , -ws_efr option can come to rescue while submitting CCT through command line . A work space pull with GL and CCT submitted with option -ws-efr will ensure that MPPBs stick to using GL for build.
+
